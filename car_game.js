@@ -48,7 +48,7 @@ setInterval(() => {
 	otherCar.classList.add("other-car");
 	otherCar.style.width = "50px";
 	otherCar.style.height = "50px";
-	otherCar.style.backgroundColor = "red";
+	otherCar.style.backgroundColor = "none";
 	otherCar.style.position = "absolute";
 	otherCar.style.top = "-100px";
 	otherCar.style.left = Math.floor(Math.random() * (window.innerWidth - otherCar.offsetWidth)) + "px";
