@@ -3,21 +3,55 @@ const startscreen = document.querySelector('.StartScreen');
 const gamearea = document.querySelector('.GameArea');
 let player = { speed: 5, score: 0 };
 let highest = 0;
-startscreen.addEventListener('click', start);
-let keys = { ArrowUp: false, ArrowDown: false, ArrowRight: false, ArrowLeft: false };
 
+startscreen.addEventListener('click', start);
 document.addEventListener('keydown', keyDown);
 document.addEventListener('keyup', keyUp);
+
+// Touch event listeners
+document.addEventListener('touchstart', touchStart);
+document.addEventListener('touchend', touchEnd);
+
+let keys = { ArrowUp: false, ArrowDown: false, ArrowRight: false, ArrowLeft: false };
+
 function keyDown(ev) {
     ev.preventDefault();
     keys[ev.key] = true;
-
 }
+
 function keyUp(ev) {
     ev.preventDefault();
     keys[ev.key] = false;
-
 }
+
+// Touch event handling
+let touchStartX = 0;
+let touchEndX = 0;
+
+function touchStart(e) {
+    touchStartX = e.touches[0].clientX;
+}
+
+function touchEnd(e) {
+    touchEndX = e.changedTouches[0].clientX;
+    handleSwipe();
+}
+
+function handleSwipe() {
+    const swipeThreshold = 50; // Adjust the threshold based on your preference
+    const swipeDifference = touchEndX - touchStartX;
+
+    if (Math.abs(swipeDifference) > swipeThreshold) {
+        if (swipeDifference > 0) {
+            // Swipe right
+            keys.ArrowRight = true;
+        } else {
+            // Swipe left
+            keys.ArrowLeft = true;
+        }
+    }
+}
+
 function isCollide(a, b) {
     aRect = a.getBoundingClientRect();
     bRect = b.getBoundingClientRect();
